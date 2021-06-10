@@ -1,0 +1,69 @@
+Init
+Given das Wärmegerät ist ausgeschaltet
+When das WG wird eingeschaltet
+Then das Wärmegerät ist initialisiert mit einer Kapazität von 3
+And der Tellerstapel ist 0
+
+Push
+Given das Wärmegerät ist ausgeschaltet
+When das WG wird eingeschaltet
+And das Wärmegerät wird initialisiert mit einer Kapazität von 3
+And die Höhe ist unter Max
+Then ein Teller wird hinzugefügt
+
+Push
+Given das Wärmegerät ist ausgeschaltet
+When das WG wird eingeschaltet und initialisiert mit einer Kapazität von 3
+And ein Teller wird hinzugefügt
+And die Höhe ist unter Max
+Then ein Teller wird hinzugefügt
+
+Push max Höhe erreicht
+Given das Wärmegerät ist ausgeschaltet
+When das WG wird eingeschaltet und initialisiert mit einer Kapazität von 1
+And ein Teller wird hinzugefügt
+And die Höhe ist 1
+Then MaxSizeReachedException wird geworfen
+
+Push nicht eingeschaltetes WG
+Given das Wärmegerät ist ausgeschaltet
+When ein Teller hinzugefügt wird
+Then NotInitializedException wird geworfen
+
+Pop
+Given das Wärmegerät wird eingeschaltet mit einer Kapazität von 3
+And ein Teller wird hinzugefügt
+And ein weiterer Teller wird hinzugefügt
+When die Höhe über 0 ist
+Then vom Stapel genommenein Teller wird abgezogen
+
+Pop nicht eingeschaltetes WG
+Given das Wärmegerät ist ausgeschaltet
+When ein Teller wird entfernt
+Then NotInitializedException wird geworfen
+
+Pop eingeschaltetem aber leerem WG
+Given das Wärmegerät ist eingeschaltet und initialisiert mit 3
+When ein Teller wird entfernt
+Then IsEmptyException wird geworfen
+
+Peek
+Given das Wärmegerät wird eingeschaltet mit einer Kapazität von 3
+And ein Teller wird hinzugefügt
+When Stapelhöhe wird abgefragt
+Then die derzeitige Stapelhöhe wird angezeigt
+
+Peek mit eingeschaltetem aber leerem WG
+Given das Wärmegerät wird eingeschaltet mit einer Kapazität von 3
+When Stapelhöhe wird abgefragt
+Then IsEmptyExcception wird geworfen
+
+Delete
+Given das Wärmegerät wird eingeschaltet mit einer Kapazität von 3
+When kein Teller im WG
+Then schalte WG aus
+
+Delete Not possible
+Given das Wärmegerät ist ausgeschaltet und nicht initialisiert
+When das WG ausgeschaltet wird
+Then NotDeletableException wird geworfen
